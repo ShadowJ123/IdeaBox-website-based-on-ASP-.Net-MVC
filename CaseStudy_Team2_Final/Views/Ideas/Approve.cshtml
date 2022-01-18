@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CaseStudy_Team2_Final.Models.Idea>
+
+<h1>Pending Ideas</h1>
+
+@*<p>
+        <a asp-action="Create">Create New Idea</a>
+    </p>*@
+
+<form>
+    <div class="form-actions no-color">
+        <p>
+            Search by : <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />
+            @*<a asp-action="Index">Back to Full List</a>*@
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContributedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("id", item.IdeaID)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContributedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tag)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <!--<td>
+                <button type="submit" name="SubmitButton" value="Approve" class="btn btn-sm btn-success">Accept</button>-->
+                    @*@Html.DisplayFor(modelItem => item.Status)*@
+                    <!--</td>-->
+                    <td>
+                        
+                        @*<a asp-action="ChangeStatus" asp-route-id="@item.IdeaID">Change</a>*@ |
+                        <a asp-action="Details" asp-route-id="@item.IdeaID">Details</a> |
+                        @*<button type="submit" form="nameform" value="Submit">Submit</button>*@
+                    </td>
+
+                    <td>
+                        
+                            <button type="submit" name="SubmitButton" value="Approve" class="btn btn-sm btn-success">Approve</button>
+                        
+                        
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

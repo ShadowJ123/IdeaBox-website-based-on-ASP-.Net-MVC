@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CaseStudy_Team2_Final.Models.Emp>
+
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<h1>Emp Details</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<div>
+    @*<h4>Emp</h4>*@
+    <hr />
+    <dl class="row">
+
+
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>*@
+        @*<dd class="col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>*@
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.password)
+        </dd>*@
+
+        <!--<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>-->
+        @*<th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>*@
+        <!--<th></th>
+        </tr>
+    </thead>
+    <tbody>-->
+        @foreach (var item in Model)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EmpID)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.EmpID)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.name)
+            </dd>
+            @*<dd class="col-sm-10">
+                <a asp-action="Create" asp-route-id="@item.EmpID">Create</a>
+            </dd>
+            <dd class="col-sm-10">
+                <a asp-action="Delete" asp-route-id="@item.EmpID">Delete</a>
+            </dd>*@
+            <!--<tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>-->
+            @*<td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>*@
+            <!--<td>
+        <a asp-action="Edit" asp-route-id="@item.EmpID">Edit</a> |-->
+            @*<a asp-action="Details" asp-route-id="@item.EmpID">Details</a> |*@
+            @*<a asp-action="Delete" asp-route-id="@item.EmpID">Delete</a>*@
+            <!--</td>
+        </tr>-->
+        }
+
+        @*</tbody>
+        </table>*@
+    </dl>
+</div>

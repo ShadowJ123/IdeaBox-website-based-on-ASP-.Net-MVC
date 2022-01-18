@@ -1,0 +1,181 @@
+﻿@model PaginatedList<CaseStudy_Team2_Final.Models.Idea>
+
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <style>
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            text-align: center;
+            width: 150px;
+            height: 50px;
+            padding: 5px;
+        }
+
+            .rating > span {
+                display: inline-block;
+                position: relative;
+                width: 1.1em;
+            }
+
+            .rating > *:hover,
+            .rating > *:hover ~ span,
+            .rating:not(:hover) > input:checked ~ span {
+                color: transparent;
+            }
+
+                .rating > *:hover:before,
+                .rating > *:hover ~ span:before,
+                .rating:not(:hover) > input:checked ~ span:before {
+                    content: "\2605";
+                    position: absolute;
+                    left: 0;
+                    color: gold;
+                }
+
+            .rating > input {
+                margin-left: -1.1em;
+                margin-right: 0;
+                top: 3px;
+                width: 1.1em;
+                height: 1.1em;
+                position: relative;
+                z-index: 2;
+                opacity: 0;
+            }
+
+
+    </style>
+</head>
+
+<h1>
+    Search all ideas.
+</h1>
+
+<form asp-action="Search" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search by : <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />
+            <a asp-action="Search">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Search" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Contributed by</a>
+            </th>
+            <th>
+                <a asp-action="Search" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Date</a>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.*@Title@*)*@
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>*@
+
+            <th>
+                @*@Html.DisplayNameFor(model => model.*@Tag@*)*@
+            </th>
+            <th>
+                <a asp-action="Search" asp-route-sortOrder="@ViewData["RateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Rating</a>
+            </th>
+
+            <th>
+                @*@Html.DisplayNameFor(model => model.*@Status@*)*@
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("id", item.IdeaID)
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContributedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Tag)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+
+                @*<form asp-action="Search" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <input type="text" name="rating" value=@ViewBag.ratingbtn/>
+                    <input type="submit" value="Rate" class="btn btn-default" />
+                </p>
+            </div>
+        </form>*@
+                @*<form asp-action="Search">*@
+                    <div class="rating">
+                        <input name="myrating" type="radio" value="5" /><span>☆</span><input name="myrating" type="radio" value="4" /> <span>☆</span><input name="myrating" type="radio" value="3" /><span>☆</span><input name="myrating" type="radio" value="2" /><span>☆</span><input name="myrating" type="radio" value="1" /><span>☆</span>
+                    </div>
+                @*</form>*@
+            </td>
+            <td>
+                @*Pending*@
+                @*<button class="w3-button w3-red">Accept</button>*@
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.IdeaID">Rate This Idea</a>*@ 
+                <a asp-action="Details" asp-route-id="@item.IdeaID">Details</a>
+            </td>
+            <td>
+                <form asp-action="Search">
+                    <button type="submit" name="SubmitButton" value="Approve" class="btn btn-sm btn-primary">POST</button>
+                </form>
+             </td>
+        </tr>
+            }
+        }
+        </tbody>
+</table>
+
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+
+
+@{
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Search"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Search"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

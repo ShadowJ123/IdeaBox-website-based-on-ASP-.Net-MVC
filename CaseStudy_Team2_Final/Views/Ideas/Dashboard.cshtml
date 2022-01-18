@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<CaseStudy_Team2_Final.Models.Idea>*@
+@using CaseStudy_Team2_Final.Models
+@model collection
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+
+    </p>*@
+
+
+
+<h1>
+    Welcome 
+    @User.Identity.Name
+    @*@foreach (var item in Model.emplist)
+        {
+            @Html.DisplayFor(model => item.name)
+        }*@
+</h1>
+  
+
+
+<div class="text-center">
+    <p>
+        You can search all approved ideas here.
+    </p>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].ContributedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].Date)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.idealist[0].Description)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].Tag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idealist[0].Status)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.idealist)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContributedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tag)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Rating)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.IdeaID">Edit</a> |*@
+                    <a asp-action="Details" asp-route-id="@item.IdeaID">Details</a> @*|
+                        <a asp-action="Delete" asp-route-id="@item.IdeaID">Delete</a>*@
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
